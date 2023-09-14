@@ -20,4 +20,13 @@ Unity Project/[Aa]ssets/StreamingAssets/**/*.bank.meta
 
 # If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
 # Log files can be ignored.
-Unity Projectfmod_editor.log
+Unity Project/fmod_editor.log
+
+# Ignore the auto-generated AOT compatibility dll.
+Unity Project/Assets/Plugins/Sirenix/Assemblies/AOT/*
+
+# Ignore all unpacked demos.
+Unity Project/Assets/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!Unity Project/Assets/Plugins/Sirenix/Demos/*.unitypackage 
