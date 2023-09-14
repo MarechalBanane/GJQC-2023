@@ -30,3 +30,7 @@ Unity Project/Assets/Plugins/Sirenix/Demos/*
 
 # But keep the demo packages themselves.
 !Unity Project/Assets/Plugins/Sirenix/Demos/*.unitypackage 
+Unity Project/.vs/Unity Project/FileContentIndex
+Unity Project/.vs/Unity Project/v17
+Unity Project/obj
+*.csproj
