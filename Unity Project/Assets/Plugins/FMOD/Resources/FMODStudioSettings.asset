@@ -226,7 +226,7 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: ../../GJQC-Son/GJQC/GJQC.fspro
-  sourceBankPath: ../../GJQC-Son/GJQC/Build/Desktop
+  sourceBankPath: ../Fmod/Desktop
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
