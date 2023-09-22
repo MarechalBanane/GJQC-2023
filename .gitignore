@@ -34,3 +34,4 @@ Unity Project/.vs/Unity Project/FileContentIndex
 Unity Project/.vs/Unity Project/v17
 Unity Project/obj
 *.csproj
+*.DS_Store
