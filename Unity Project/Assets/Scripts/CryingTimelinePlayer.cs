@@ -65,6 +65,8 @@ public class CryingTimelinePlayer : MonoBehaviour
     private TimelineInfo timelineInfo;
     private GCHandle timelineHandle;
 
+    public float Tempo => this.timelineInfo.Tempo;
+
     private void Start()
     {
         timelineInfo = new TimelineInfo();
@@ -88,9 +90,10 @@ public class CryingTimelinePlayer : MonoBehaviour
 
     private void Update()
     {
-        this.timelineInfo.MusicTime += Time.unscaledDeltaTime;
+        this.MusicTime += Time.unscaledDeltaTime;
         if (this.timelineInfo.NewBeat)
         {
+            this.MusicTime = this.timelineInfo.MusicTime;
             ++this.MusicBeat;
             this.timelineInfo.NewBeat = false;
             CryingTimeline tl = this.Timeline;
