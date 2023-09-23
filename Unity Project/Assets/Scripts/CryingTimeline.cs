@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class CryingTimeline : MonoBehaviour
 {
-    public CryingTrack_Analog[] Analogs;
+    [UnityEngine.Tooltip("The duration of the level in beat units")]
+    public int LengthInBeats = 1;
+    public UnityEngine.AnimationCurve[] Analogs;
     public CryingTrack_Button[] Buttons;
-
-    [System.Serializable]
-    public struct CryingTrack_Analog
-    {
-        public float[] Values;
-    }
 
     [System.Serializable]
     public struct CryingTrack_Button

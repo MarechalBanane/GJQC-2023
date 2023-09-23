@@ -45,7 +45,8 @@ public class CryingTimelinePlayer : MonoBehaviour
         public FMOD.StringWrapper LastMarker = new FMOD.StringWrapper();
     }
 
-    public CryingButton[] buttons;
+    public CryingButton[] Buttons;
+    public CryingAnalog[] Analogs;
 
     public CryingTimeline Timeline;
 
@@ -103,9 +104,9 @@ public class CryingTimelinePlayer : MonoBehaviour
                     if (ev == this.MusicBeat + this.BeatOffsetForFeedback)
                     {
                         // TODO : fire event to correct button
-                        if (this.buttons != null && this.buttons.Length> iButton)
+                        if (this.Buttons != null && this.Buttons.Length> iButton)
                         {
-                            CryingButton btn = this.buttons[iButton];
+                            CryingButton btn = this.Buttons[iButton];
                             btn.TapPreview.Invoke(this.BeatOffsetForFeedback * 60 / this.timelineInfo.Tempo);
                         }
                     }
