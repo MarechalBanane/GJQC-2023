@@ -34,10 +34,29 @@ public class CryingTimelineEvaluator : MonoBehaviour
 
     public void Update()
     {
-        // TODO : - get where we are
+        // TODO
         // - send feedback events if necessary
         // - check input against each track
+        CryingTimeline tl = this.Timeline;
 
+        float currentMusicTime = this.TimelinePlayer.MusicTime;
+        float delta = UnityEngine.Time.deltaTime;
+        for (int iAnalog = 0; iAnalog < tl.Analogs.Length; ++iAnalog)
+        {
+        }
+
+        this.Score.buttonScores = new float[this.Timeline.Buttons.Length][];
+        for (int iButton = 0; iButton < this.Score.buttonScores.Length; ++iButton)
+        {
+            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
+            float[] scoreTable = new float[cryingTrack_Button.Beats.Length];
+            for (int iBeat = 0; iBeat < scoreTable.Length; ++iBeat)
+            {
+                scoreTable[iBeat] = 0;
+            }
+
+            this.Score.buttonScores[iButton] = scoreTable;
+        }
     }
 
     public struct ScoreData
