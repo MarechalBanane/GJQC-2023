@@ -35,3 +35,6 @@ Unity Project/.vs/Unity Project/v17
 Unity Project/obj
 *.csproj
 *.DS_Store
+Unity Project/Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
+Unity Project/ProjectSettings/Packages/com.unity.probuilder/Settings.json
+Unity Project/ProjectSettings/TimelineSettings.asset
