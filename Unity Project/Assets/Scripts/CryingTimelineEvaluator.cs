@@ -35,12 +35,12 @@ public class CryingTimelineEvaluator : MonoBehaviour
     public void Update()
     {
         // TODO
-        // - send feedback events if necessary
         // - check input against each track
         CryingTimeline tl = this.Timeline;
 
         float currentMusicTime = this.TimelinePlayer.MusicTime;
         float delta = UnityEngine.Time.deltaTime;
+        
         for (int iAnalog = 0; iAnalog < tl.Analogs.Length; ++iAnalog)
         {
         }

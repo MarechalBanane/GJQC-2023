@@ -9,19 +9,23 @@ using UnityEngine.Events;
 public class CryingAnalog : MonoBehaviour
 {
     public string AxisName;
-    public EventReference FmodEvent;
-
-    private FMOD.Studio.EventInstance ouinInstance;
+    public Vector2 AxisMinMax;
+    public string ParameterName;
+    public Vector2 ParamMinMax;
+    public MainCry Cry;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        this.ouinInstance = FMODUnity.RuntimeManager.CreateInstance(FmodEvent);
-        this.ouinInstance.start();
-    }
 
     // Update is called once per frame
     void Update()
     {
+        if (this.Cry != null)
+        {
+            float value = Input.GetAxis(this.AxisName);
+            value = Mathf.Clamp(value, this.AxisMinMax.x, this.AxisMinMax.y);
+            value = (value - this.AxisMinMax.x) / (this.AxisMinMax.y - this.AxisMinMax.x);
+            value = Mathf.Lerp(this.ParamMinMax.x, this.ParamMinMax.y, value);
+            this.Cry.Instance.setParameterByName(this.ParameterName, value);
+        }
     }
 }
