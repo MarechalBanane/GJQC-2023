@@ -11,6 +11,8 @@ public class CryingAnalogRenderer : MonoBehaviour
     public int AnalogId;
     public string AxisName;
     public UnityEngine.GameObject PlayerFeedbackObject;
+    public RectTransform PotardFeedbackTransform;
+    public Vector2 PotardMinMaxY;
     public int PointsPerBeat;
     public int LengthInBeats;
     public float Width;
@@ -61,20 +63,29 @@ public class CryingAnalogRenderer : MonoBehaviour
         float musicTimeInBeats = this.Player.MusicTimeInBeats - this.OffsetInBeats;
         float timePerPoint = 1.0f / this.PointsPerBeat;
         Vector3 position = this.transform.position;
+        Vector3 potardPosition = this.PotardFeedbackTransform.localPosition;
 
         // show player feedback
         float x = position.x + this.OffsetInBeats * this.PointsPerBeat * this.pointWidth;
         float z = this.PlayerFeedbackObject.transform.position.z;
+        float newPotardX = potardPosition.x;
+        float newPotardZ = potardPosition.z;
+        float neutralPPosY = (this.PotardMinMaxY.x + this.PotardMinMaxY.y) / 2;
         if (this.Player.IsFullyStarted && !this.Player.IsEnded)
         {
             float axisValue = Input.GetAxis(this.AxisName);
             float y = position.y + axisValue;
             this.PlayerFeedbackObject.transform.position = new Vector3(x, y, z);
+
+            float newPotardY = neutralPPosY + axisValue * (this.PotardMinMaxY.y - this.PotardMinMaxY.x) / 2;
+            this.PotardFeedbackTransform.localPosition = new Vector3(newPotardX, newPotardY, newPotardZ);
         }
         else
         {
             float y = position.y;
             this.PlayerFeedbackObject.transform.position = new Vector3(x, y, z);
+
+            this.PotardFeedbackTransform.localPosition = new Vector3(newPotardX, neutralPPosY, newPotardZ);
         }
 
         if (this.Player.IsFullyStarted)
