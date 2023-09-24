@@ -2851,8 +2851,8 @@ MonoBehaviour:
   AnalogId: 0
   AxisName: Vertical
   PlayerFeedbackObject: {fileID: 516753444}
-  PotardFeedbackTransform: {fileID: 0}
-  PotardMinMaxY: {x: 0, y: 0}
+  PotardFeedbackTransform: {fileID: 1142610713}
+  PotardMinMaxY: {x: -115, y: 335}
   PointsPerBeat: 8
   LengthInBeats: 8
   Width: 5
@@ -9355,7 +9355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 546, y: 13}
+  m_AnchoredPosition: {x: 546, y: -115}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1152023847
@@ -14722,8 +14722,8 @@ MonoBehaviour:
   AnalogId: 1
   AxisName: CryingPitch
   PlayerFeedbackObject: {fileID: 659516796}
-  PotardFeedbackTransform: {fileID: 0}
-  PotardMinMaxY: {x: 0, y: 0}
+  PotardFeedbackTransform: {fileID: 1207402355}
+  PotardMinMaxY: {x: -115, y: 335}
   PointsPerBeat: 8
   LengthInBeats: 8
   Width: 5
