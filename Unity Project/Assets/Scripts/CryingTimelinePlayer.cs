@@ -133,6 +133,16 @@ public class CryingTimelinePlayer : MonoBehaviour
                 }
             }
 
+            // See if we need to launch beat events
+            int[] beatEvents = tl.BeatEvents;
+            for (int iEvent = 0;iEvent < beatEvents.Length; ++iEvent)
+            {
+                if (beatEvents[iEvent] == this.MusicBeat)
+                {
+                    tl.OnBeatEvent.Invoke();
+                }
+            }
+
             if (this.MusicBeat == this.Timeline.LengthInBeats)
             {
                 Debug.Log("Ended !");
