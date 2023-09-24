@@ -924,11 +924,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1606790185
-      Data2: 1222069255
-      Data3: -2006476665
-      Data4: -1094747531
-    Path: event:/SFX/SFX_Random
+      Data1: -861946835
+      Data2: 1235239260
+      Data3: 538482569
+      Data4: 1139254939
+    Path: event:/MUSIC
   Event: 
   PlayEvent: 1
   StopEvent: 0
