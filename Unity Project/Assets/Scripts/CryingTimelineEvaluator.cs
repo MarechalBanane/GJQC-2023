@@ -123,6 +123,11 @@ public class CryingTimelineEvaluator : MonoBehaviour
                             this.Score.TotalScore += scoreToAdd;
                             button.Scored.Invoke();
                             updateScore = true;
+                            button.SetPercussion(true);
+                        }
+                        else
+                        {
+                            button.SetPercussion(false);
                         }
                     }
                     else

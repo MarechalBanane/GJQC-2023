@@ -17,6 +17,18 @@ public class CryingButton : MonoBehaviour
 
     private FMOD.Studio.EventInstance ouinInstance;
 
+    public void SetPercussion(bool percussion)
+    {
+        if (percussion)
+        {
+            this.ouinInstance.setParameterByName("Percs", 1);
+        }
+        else
+        {
+            this.ouinInstance.setParameterByName("Percs", 0);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
