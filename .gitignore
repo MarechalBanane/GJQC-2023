@@ -38,3 +38,5 @@ Unity Project/obj
 Unity Project/Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
 Unity Project/ProjectSettings/Packages/com.unity.probuilder/Settings.json
 Unity Project/ProjectSettings/TimelineSettings.asset
+Builds/MonoBleedingEdge/EmbedRuntime/mono-2.0-bdwgc.dll
+Builds/
