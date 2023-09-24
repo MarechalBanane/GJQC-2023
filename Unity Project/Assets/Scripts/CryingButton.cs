@@ -12,6 +12,8 @@ public class CryingButton : MonoBehaviour
     public EventReference FmodEvent;
     public UnityEvent<float> TapPreview;
     public UnityEvent Tapped;
+    public UnityEvent Scored;
+    public UnityEvent Missed;
 
     private FMOD.Studio.EventInstance ouinInstance;
 

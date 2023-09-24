@@ -32,18 +32,6 @@ using UnityEngine.Events;
 
 public class CryingTimelinePlayer : MonoBehaviour
 {
-    class TimelineInfo
-    {
-        public int Bar = 0;
-        public int Beat = 0;
-        public int Position = 0;
-        public float Tempo = 0;
-        public int BeatsPerBar = 0;
-        public bool NewBeat = false;
-
-        public FMOD.StringWrapper LastMarker = new FMOD.StringWrapper();
-    }
-
     public CryingButton[] Buttons;
     public CryingAnalog[] Analogs;
 
@@ -51,8 +39,25 @@ public class CryingTimelinePlayer : MonoBehaviour
 
     public EventReference MusicEvent;
 
+    public UnityEvent OnEnd;
+
     [UnityEngine.HideInInspector]
     public float MusicTime;
+
+    [UnityEngine.HideInInspector]
+    public int MusicBeat;
+
+    public int BeatsBeforeStarting = 16;
+    public int BeatOffsetForFeedback = 4;
+
+    private FMOD.Studio.EVENT_CALLBACK beatCallback;
+    private FMOD.Studio.EventInstance musicInstance;
+
+    private TimelineInfo timelineInfo;
+    private GCHandle timelineHandle;
+
+    public float Tempo => this.timelineInfo.Tempo;
+
     [UnityEngine.HideInInspector]
     public float MusicTimeInBeats
     {
@@ -71,20 +76,14 @@ public class CryingTimelinePlayer : MonoBehaviour
         }
     }
 
-    [UnityEngine.HideInInspector]
-    public int MusicBeat;
+    public bool IsPlaying
+    {
+        get
+        {
+            return this.MusicTime > 0 && this.MusicTimeInBeats < this.Timeline.LengthInBeats;
+        }
+    }
 
-    public int BeatsBeforeStarting = 16;
-    public int BeatOffsetForFeedback = 4;
-
-    private FMOD.Studio.EVENT_CALLBACK beatCallback;
-    private FMOD.Studio.EventInstance musicInstance;
-
-    private TimelineInfo timelineInfo;
-    private GCHandle timelineHandle;
-
-    public float Tempo => this.timelineInfo.Tempo;
-    
     private void Start()
     {
         timelineInfo = new TimelineInfo();
@@ -114,6 +113,7 @@ public class CryingTimelinePlayer : MonoBehaviour
             ++this.MusicBeat;
             this.MusicTime = this.MusicBeat / this.Tempo * 60;
             this.timelineInfo.NewBeat = false;
+
             CryingTimeline tl = this.Timeline;
             for (int iButton = 0; iButton < tl.Buttons.Length; iButton++)
             {
@@ -124,14 +124,19 @@ public class CryingTimelinePlayer : MonoBehaviour
                     int ev = buttontrack.Beats[iEvent];
                     if (ev == this.MusicBeat + this.BeatOffsetForFeedback)
                     {
-                        // TODO : fire event to correct button
-                        if (this.Buttons != null && this.Buttons.Length> iButton)
+                        if (this.Buttons != null && this.Buttons.Length > iButton)
                         {
                             CryingButton btn = this.Buttons[iButton];
                             btn.TapPreview.Invoke(this.BeatOffsetForFeedback * 60 / this.timelineInfo.Tempo);
                         }
                     }
                 }
+            }
+
+            if (this.MusicBeat == this.Timeline.LengthInBeats)
+            {
+                Debug.Log("Ended !");
+                this.OnEnd.Invoke();
             }
         }
     }
@@ -142,11 +147,6 @@ public class CryingTimelinePlayer : MonoBehaviour
         musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         musicInstance.release();
         timelineHandle.Free();
-    }
-
-    private void OnGUI()
-    {
-        //GUILayout.Box(String.Format($"bar {timelineInfo.Bar} beat {timelineInfo.Beat} position {timelineInfo.Position} tempo {timelineInfo.Tempo} time {timelineInfo.MusicTime}"));
     }
 
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
@@ -189,5 +189,17 @@ public class CryingTimelinePlayer : MonoBehaviour
             }
         }
         return FMOD.RESULT.OK;
+    }
+
+    public class TimelineInfo
+    {
+        public int Bar = 0;
+        public int Beat = 0;
+        public int Position = 0;
+        public float Tempo = 0;
+        public int BeatsPerBar = 0;
+        public bool NewBeat = false;
+
+        public FMOD.StringWrapper LastMarker = new FMOD.StringWrapper();
     }
 }
