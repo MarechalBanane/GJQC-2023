@@ -23,6 +23,11 @@ public class CryingTimelineEvaluator : MonoBehaviour
         for (int iAnalog=0; iAnalog < this.Score.AnalogScores.Length; ++iAnalog)
         {
             this.Score.AnalogScores[iAnalog] = 0;
+            CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
+            if (renderer != null)
+            {
+                renderer.IsScoring = true;
+            }
         }
 
         this.Score.ButtonScores = new float[this.Timeline.Buttons.Length][];
@@ -44,44 +49,47 @@ public class CryingTimelineEvaluator : MonoBehaviour
         CryingTimeline tl = this.Timeline;
 
         float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
-        float delta = UnityEngine.Time.deltaTime;
-        float lengthInBeats = tl.LengthInBeats;
-
-        for (int iAnalog = 0; iAnalog < tl.Analogs.Length; ++iAnalog)
+        if (musicBeatTime >= 0)
         {
-            CryingAnalog analog = this.TimelinePlayer.Analogs[iAnalog];
-            float abscissa = musicBeatTime / tl.LengthInBeats;
-            float tlValue = tl.Analogs[iAnalog].Evaluate(abscissa);
-            float axisValue = analog.AxisValue;
-            float scorePerBeat = this.AnalogScores[iAnalog] / lengthInBeats;
-            float beatLengthInSeconds = this.TimelinePlayer.BeatLengthInSeconds;
-            float scorePerSecond = scorePerBeat / beatLengthInSeconds;
-            float diff = Mathf.Abs(tlValue - axisValue);
+            float delta = UnityEngine.Time.deltaTime;
+            float lengthInBeats = tl.LengthInBeats;
 
-            bool isScoring = diff < this.MaxAnalogError;
-
-            Debug.Log($"abs {abscissa} tl {tlValue} axis {axisValue} diff {diff} isScoring {isScoring}");
-
-            // Update renderer feedback flag
-            CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
-            if (renderer != null)
+            for (int iAnalog = 0; iAnalog < tl.Analogs.Length; ++iAnalog)
             {
-                renderer.IsScoring = isScoring;
+                CryingAnalog analog = this.TimelinePlayer.Analogs[iAnalog];
+                float abscissa = musicBeatTime / tl.LengthInBeats;
+                float tlValue = tl.Analogs[iAnalog].Evaluate(abscissa);
+                float axisValue = analog.AxisValue;
+                float scorePerBeat = this.AnalogScores[iAnalog] / lengthInBeats;
+                float beatLengthInSeconds = this.TimelinePlayer.BeatLengthInSeconds;
+                float scorePerSecond = scorePerBeat / beatLengthInSeconds;
+                float diff = Mathf.Abs(tlValue - axisValue);
+
+                bool isScoring = diff < this.MaxAnalogError;
+
+                Debug.Log($"abs {abscissa} tl {tlValue} axis {axisValue} diff {diff} isScoring {isScoring}");
+
+                // Update renderer feedback flag
+                CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
+                if (renderer != null)
+                {
+                    renderer.IsScoring = isScoring;
+                }
+
+                if (isScoring)
+                {
+                    float scoreToAdd = delta * scorePerSecond;
+                    this.Score.AnalogScores[iAnalog] += scoreToAdd;
+                    this.Score.TotalScore += scoreToAdd;
+                }
             }
 
-            if (isScoring)
+            for (int iButton = 0; iButton < tl.Buttons.Length; ++iButton)
             {
-                float scoreToAdd = delta * scorePerSecond;
-                this.Score.AnalogScores[iAnalog] += scoreToAdd;
-                this.Score.TotalScore += scoreToAdd;
-            }
-        }
+                CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
 
-        for (int iButton = 0; iButton < tl.Buttons.Length; ++iButton)
-        {
-            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
-            
-            // TODO : check if a button has been pushed correctly. If so, add points
+                // TODO : check if a button has been pushed correctly. If so, add points
+            }
         }
     }
 

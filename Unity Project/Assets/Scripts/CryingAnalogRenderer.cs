@@ -21,11 +21,15 @@ public class CryingAnalogRenderer : MonoBehaviour
     public CryingTimelinePlayer Player;
     public Color WinColor;
     public Color LoseColor;
+    public UnityEvent OnScoring;
+    public UnityEvent OnStopScoring;
 
     private UnityEngine.AnimationCurve analogCurve;
     private Unity.Collections.NativeArray<Vector3> positions;
     private int pointCount;
     private float pointWidth;
+
+    private bool wasScoring;
 
     [UnityEngine.HideInInspector]
     public bool IsScoring
@@ -42,6 +46,7 @@ public class CryingAnalogRenderer : MonoBehaviour
         this.analogCurve = this.Timeline.Analogs[this.AnalogId];
         this.positions = new Unity.Collections.NativeArray<Vector3>(this.pointCount, Unity.Collections.Allocator.Persistent);
         this.LineRenderer.positionCount = this.pointCount;
+        this.wasScoring = this.IsScoring;
     }
 
     private void OnDestroy()
@@ -52,9 +57,8 @@ public class CryingAnalogRenderer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float musicTime = this.Player.MusicTime;
         float musicTimeInBeats = this.Player.MusicTimeInBeats - this.OffsetInBeats;
-        float timePerPoint = 1.0f / PointsPerBeat;
+        float timePerPoint = 1.0f / this.PointsPerBeat;
         Vector3 position = this.transform.position;
 
         float axisValue = Input.GetAxis(this.AxisName);
@@ -65,9 +69,9 @@ public class CryingAnalogRenderer : MonoBehaviour
 
         for (int i = 0; i < this.pointCount; ++i)
         {
-            float value = this.analogCurve.Evaluate(musicTimeInBeats / this.Timeline.LengthInBeats);
-
+            float abscissa = musicTimeInBeats / this.Timeline.LengthInBeats;
             musicTimeInBeats += timePerPoint;
+            float value = this.analogCurve.Evaluate(abscissa);
             this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y + (value * this.Height / 2), position.z);
         }
 
@@ -80,6 +84,20 @@ public class CryingAnalogRenderer : MonoBehaviour
         {
             this.LineRenderer.startColor = this.LoseColor;
             this.LineRenderer.endColor = this.LoseColor;
+        }
+
+        if (this.wasScoring != this.IsScoring)
+        {
+            if (this.IsScoring)
+            {
+                this.OnScoring.Invoke();
+            }
+            else
+            {
+                this.OnStopScoring.Invoke();
+            }
+
+            this.wasScoring = this.IsScoring;
         }
 
         this.LineRenderer.SetPositions(this.positions);
