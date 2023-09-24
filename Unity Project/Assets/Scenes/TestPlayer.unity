@@ -1932,6 +1932,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ProgressionParameter: MusicPart
+  ProgressionStepCount: 17
+  ProgPercentPerStep: 4
   AnalogScores:
   - 10000
   ButtonScores:

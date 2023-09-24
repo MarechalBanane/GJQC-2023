@@ -22,6 +22,7 @@
 //
 //--------------------------------------------------------------------
 
+using FMOD.Studio;
 using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
@@ -102,6 +103,15 @@ public class CryingTimelinePlayer : MonoBehaviour
             return this.isStarted && this.firstBeatReceived;
         }
     }
+
+    public EventInstance MusicInstance
+    {
+        get
+        {
+            return this.musicInstance;
+        }
+    }
+
 
     public void Play()
     {
