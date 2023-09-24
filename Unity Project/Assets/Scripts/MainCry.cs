@@ -8,9 +8,11 @@ using UnityEngine.Events;
 
 public class MainCry : MonoBehaviour
 {
+    public KeyCode Secret = KeyCode.JoystickButton4;
     public EventReference FmodEvent;
 
     private FMOD.Studio.EventInstance ouinInstance;
+    private bool secretOn = false;
 
     public FMOD.Studio.EventInstance Instance => this.ouinInstance;
 
@@ -19,6 +21,22 @@ public class MainCry : MonoBehaviour
     {
         this.ouinInstance = FMODUnity.RuntimeManager.CreateInstance(FmodEvent);
         this.ouinInstance.start();
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(this.Secret))
+        {
+            this.secretOn = !this.secretOn;
+            if (this.secretOn)
+            {
+                this.ouinInstance.setParameterByName("Tune", 1);
+            }
+            else
+            {
+                this.ouinInstance.setParameterByName("Tune", 0);
+            }
+        }
     }
 
     public void Stop()
