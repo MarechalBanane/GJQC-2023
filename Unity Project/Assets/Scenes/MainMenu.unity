@@ -924,11 +924,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -861946835
-      Data2: 1235239260
-      Data3: 538482569
-      Data4: 1139254939
-    Path: event:/MUSIC
+      Data1: 1681183455
+      Data2: 1298814979
+      Data3: 2139279280
+      Data4: -565395280
+    Path: event:/MUSIC_Intro
   Event: 
   PlayEvent: 1
   StopEvent: 0
