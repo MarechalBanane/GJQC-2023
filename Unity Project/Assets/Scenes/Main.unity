@@ -843,7 +843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13, y: 200}
+  m_AnchoredPosition: {x: 13, y: 145}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &366694880
@@ -903,7 +903,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: B
+  m_text: A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
   m_sharedMaterial: {fileID: 8279089817685890, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
@@ -1666,7 +1666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8311557785894276017, guid: ecccbcdf9c1ef7c489cf6aaeee0c9163, type: 3}
       propertyPath: Input
-      value: 330
+      value: 332
       objectReference: {fileID: 0}
     - target: {fileID: 8311557785894276017, guid: ecccbcdf9c1ef7c489cf6aaeee0c9163, type: 3}
       propertyPath: FmodEvent.Path
@@ -7999,7 +7999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6580169648789039775, guid: fda62da9a15f3e84c89d02ef19015e6b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13269,8 +13269,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
-  m_sharedMaterial: {fileID: 8279089817685890, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13374,7 +13374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8311557785894276017, guid: ecccbcdf9c1ef7c489cf6aaeee0c9163, type: 3}
       propertyPath: Input
-      value: 332
+      value: 330
       objectReference: {fileID: 0}
     - target: {fileID: 8311557785894276017, guid: ecccbcdf9c1ef7c489cf6aaeee0c9163, type: 3}
       propertyPath: FmodEvent.Path
@@ -13674,6 +13674,54 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Stop
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2038061380}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1052619842}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709336477}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1499282468}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14511,6 +14559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9919a8ccfed8c4c87874d93a71ae38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Secret: 334
   FmodEvent:
     Guid:
       Data1: -1257998474
@@ -14752,13 +14801,13 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   AnalogScores:
-  - 100
-  - 100
+  - 10000
+  - 10000
   ButtonScores:
-  - 1
-  - 1
-  - 1
-  - 1
+  - 100
+  - 100
+  - 100
+  - 100
   MaxAnalogError: 0.5
   MaxButtonError: 0
   Timeline: {fileID: 1065646532}
@@ -15235,7 +15284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
   m_sharedMaterial: {fileID: 8279089817685890, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
@@ -20340,7 +20389,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: X
+  m_text: B
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
   m_sharedMaterial: {fileID: 8279089817685890, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
@@ -37048,14 +37097,30 @@ PrefabInstance:
     - target: {fileID: 1137809331420846723, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
+      objectReference: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     - target: {fileID: 1137809331420846723, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 8279089817685890, guid: 4fb42d1ff6cd1f44ca9d17a62a1caf00, type: 2}
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     - target: {fileID: 1137809331420846723, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211944580213881534, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 533.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211944580213881534, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 123.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211944580213881534, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -271
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211944580213881534, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 630
       objectReference: {fileID: 0}
     - target: {fileID: 2165690310478902209, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
       propertyPath: m_fontAsset
@@ -37069,7 +37134,9 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8878975789978223836, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
+    - {fileID: 7874933355988096357, guid: 91b1ebd215cfd24439339b8005ad916e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
