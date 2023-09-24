@@ -66,9 +66,9 @@ public class CryingTimelineEvaluator : MonoBehaviour
     {
         CryingTimeline tl = this.Timeline;
 
-        float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
         if (this.TimelinePlayer.IsPlaying)
         {
+            float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
             bool updateScore = false;
             float delta = UnityEngine.Time.deltaTime;
             float lengthInBeats = tl.LengthInBeats;
