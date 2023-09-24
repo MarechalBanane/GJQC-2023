@@ -34,6 +34,7 @@ public class CryingTimelinePlayer : MonoBehaviour
 {
     public CryingButton[] Buttons;
     public CryingAnalog[] Analogs;
+    public MainCry Cry;
 
     public CryingTimeline Timeline;
 
@@ -55,6 +56,8 @@ public class CryingTimelinePlayer : MonoBehaviour
 
     private TimelineInfo timelineInfo;
     private GCHandle timelineHandle;
+    private bool firstBeatReceived;
+    private bool isStarted;
 
     public float Tempo => this.timelineInfo.Tempo;
 
@@ -80,36 +83,88 @@ public class CryingTimelinePlayer : MonoBehaviour
     {
         get
         {
-            return this.MusicTime > 0 && this.MusicTimeInBeats < this.Timeline.LengthInBeats;
+            return this.MusicTime > 0 && !this.IsEnded;
+        }
+    }
+
+    public bool IsEnded
+    {
+        get
+        {
+            return this.MusicTimeInBeats >= this.Timeline.LengthInBeats;
+        }
+    }
+
+    public bool IsFullyStarted
+    {
+        get
+        {
+            return this.isStarted && this.firstBeatReceived;
+        }
+    }
+
+    public void Play()
+    {
+        this.SetControlsActive(true);
+        this.Cry.Play();
+        this.isStarted = true;
+        this.timelineInfo.NewBeat = false;
+        this.firstBeatReceived = false;
+    }
+
+    private void SetControlsActive(bool active)
+    {
+        for (int iButton = 0; iButton < this.Buttons.Length; iButton++)
+        {
+            this.Buttons[iButton].enabled = active;
+        }
+
+        for (int iAnalog = 0; iAnalog < this.Analogs.Length; iAnalog++)
+        {
+            this.Analogs[iAnalog].enabled = active;
         }
     }
 
     private void Start()
     {
-        timelineInfo = new TimelineInfo();
+        this.isStarted = false;
+        this.firstBeatReceived = false;
+        this.timelineInfo = new TimelineInfo();
 
         // Explicitly create the delegate object and assign it to a member so it doesn't get freed
         // by the garbage collected while it's being used
-        beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
+        this.beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
 
-        musicInstance = FMODUnity.RuntimeManager.CreateInstance(MusicEvent);
+        this.musicInstance = FMODUnity.RuntimeManager.CreateInstance(MusicEvent);
 
         // Pin the class that will store the data modified during the callback
-        timelineHandle = GCHandle.Alloc(timelineInfo);
+        this.timelineHandle = GCHandle.Alloc(timelineInfo);
         // Pass the object through the userdata of the instance
-        musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
+        this.musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
 
-        musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
-        musicInstance.start();
+        this.musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
+        this.musicInstance.start();
         this.MusicTime = 0;
         this.MusicBeat = -this.BeatsBeforeStarting-1;
+
+        this.SetControlsActive(false);
     }
 
     private void Update()
     {
-        this.MusicTime += Time.unscaledDeltaTime;
+        if (!this.isStarted)
+        {
+            return;
+        }
+
+        if (this.firstBeatReceived)
+        {
+            this.MusicTime += Time.unscaledDeltaTime;
+        }
+
         if (this.timelineInfo.NewBeat)
         {
+            this.firstBeatReceived = true;
             ++this.MusicBeat;
             this.MusicTime = this.MusicBeat / this.Tempo * 60;
             this.timelineInfo.NewBeat = false;
@@ -146,6 +201,8 @@ public class CryingTimelinePlayer : MonoBehaviour
             if (this.MusicBeat == this.Timeline.LengthInBeats)
             {
                 Debug.Log("Ended !");
+                this.SetControlsActive(false);
+                this.Cry.Stop();
                 this.OnEnd.Invoke();
             }
         }
@@ -153,10 +210,10 @@ public class CryingTimelinePlayer : MonoBehaviour
 
     private void OnDestroy()
     {
-        musicInstance.setUserData(IntPtr.Zero);
-        musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        musicInstance.release();
-        timelineHandle.Free();
+        this.musicInstance.setUserData(IntPtr.Zero);
+        this.musicInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        this.musicInstance.release();
+        this.timelineHandle.Free();
     }
 
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]

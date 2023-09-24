@@ -34,11 +34,6 @@ public class CryingTimelineEvaluator : MonoBehaviour
         {
             this.Score.AnalogScores[iAnalog] = 0;
             this.maxScore += this.AnalogScores[iAnalog];
-            CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
-            if (renderer != null)
-            {
-                renderer.IsScoring = true;
-            }
         }
 
         int buttonCount = this.Timeline.Buttons.Length;
@@ -60,7 +55,7 @@ public class CryingTimelineEvaluator : MonoBehaviour
         CryingTimeline tl = this.Timeline;
 
         float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
-        if (musicBeatTime >= 0)
+        if (this.TimelinePlayer.IsPlaying)
         {
             bool updateScore = false;
             float delta = UnityEngine.Time.deltaTime;

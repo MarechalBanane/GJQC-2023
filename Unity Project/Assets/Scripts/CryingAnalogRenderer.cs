@@ -46,6 +46,7 @@ public class CryingAnalogRenderer : MonoBehaviour
         this.analogCurve = this.Timeline.Analogs[this.AnalogId];
         this.positions = new Unity.Collections.NativeArray<Vector3>(this.pointCount, Unity.Collections.Allocator.Persistent);
         this.LineRenderer.positionCount = this.pointCount;
+        this.IsScoring = true;
         this.wasScoring = this.IsScoring;
     }
 
@@ -61,18 +62,37 @@ public class CryingAnalogRenderer : MonoBehaviour
         float timePerPoint = 1.0f / this.PointsPerBeat;
         Vector3 position = this.transform.position;
 
-        float axisValue = Input.GetAxis(this.AxisName);
+        // show player feedback
         float x = position.x + this.OffsetInBeats * this.PointsPerBeat * this.pointWidth;
-        float y = position.y + axisValue;
         float z = this.PlayerFeedbackObject.transform.position.z;
-        this.PlayerFeedbackObject.transform.position = new Vector3(x, y, z);
-
-        for (int i = 0; i < this.pointCount; ++i)
+        if (this.Player.IsFullyStarted && !this.Player.IsEnded)
         {
-            float abscissa = musicTimeInBeats / this.Timeline.LengthInBeats;
-            musicTimeInBeats += timePerPoint;
-            float value = this.analogCurve.Evaluate(abscissa);
-            this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y + (value * this.Height / 2), position.z);
+            float axisValue = Input.GetAxis(this.AxisName);
+            float y = position.y + axisValue;
+            this.PlayerFeedbackObject.transform.position = new Vector3(x, y, z);
+        }
+        else
+        {
+            float y = position.y;
+            this.PlayerFeedbackObject.transform.position = new Vector3(x, y, z);
+        }
+
+        if (this.Player.IsFullyStarted)
+        {
+            for (int i = 0; i < this.pointCount; ++i)
+            {
+                float abscissa = musicTimeInBeats / this.Timeline.LengthInBeats;
+                musicTimeInBeats += timePerPoint;
+                float value = this.analogCurve.Evaluate(abscissa);
+                this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y + (value * this.Height / 2), position.z);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < this.pointCount; ++i)
+            {
+                this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y, position.z);
+            }
         }
 
         if (this.IsScoring)

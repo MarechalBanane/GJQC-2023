@@ -15,9 +15,20 @@ public class MainCry : MonoBehaviour
     public FMOD.Studio.EventInstance Instance => this.ouinInstance;
 
     // Start is called before the first frame update
-    void Start()
+    public void Play()
     {
         this.ouinInstance = FMODUnity.RuntimeManager.CreateInstance(FmodEvent);
         this.ouinInstance.start();
+    }
+
+    public void Stop()
+    {
+        this.ouinInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    private void OnDestroy()
+    {
+        this.ouinInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        this.ouinInstance.release();
     }
 }

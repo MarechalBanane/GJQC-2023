@@ -32,4 +32,10 @@ public class CryingButton : MonoBehaviour
             this.Tapped.Invoke();
         }
     }
+
+    private void OnDestroy()
+    {
+        this.ouinInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        this.ouinInstance.release();
+    }
 }
