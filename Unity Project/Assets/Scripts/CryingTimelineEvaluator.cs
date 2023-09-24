@@ -160,9 +160,10 @@ public class CryingTimelineEvaluator : MonoBehaviour
                         ++this.currentProgressionStep;
                         this.TimelinePlayer.MusicInstance.setParameterByName(this.ProgressionParameter, this.currentProgressionStep);
 
-                        if (this.OnProgressionChangedEvents != null && this.OnProgressionChangedEvents.Length > this.currentProgressionStep)
+                        if (this.OnProgressionChangedEvents != null)
                         {
-                            this.OnProgressionChangedEvents[this.currentProgressionStep].Invoke();
+                            int eventId = this.currentProgressionStep % this.OnProgressionChangedEvents.Length;
+                            this.OnProgressionChangedEvents[eventId].Invoke();
                         }
                     }
                 }
