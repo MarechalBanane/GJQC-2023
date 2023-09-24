@@ -12,6 +12,7 @@ public class CryingTimelineEvaluator : MonoBehaviour
     public string ProgressionParameter;
     public int ProgressionStepCount;
     public float ProgPercentPerStep;
+    public UnityEvent[] OnProgressionChangedEvents;
 
     public float[] AnalogScores;
     public float[] ButtonScores;
@@ -53,6 +54,11 @@ public class CryingTimelineEvaluator : MonoBehaviour
             float buttonScore = cryingTrack_Button.Beats.Length * this.ButtonScores[iButton];
             this.buttonMaxScores[iButton] = buttonScore;
             this.maxScore += buttonScore;
+        }
+
+        if (this.OnProgressionChangedEvents != null && this.OnProgressionChangedEvents.Length > 0)
+        {
+            this.OnProgressionChangedEvents[0].Invoke();
         }
     }
 
@@ -153,6 +159,11 @@ public class CryingTimelineEvaluator : MonoBehaviour
                     {
                         ++this.currentProgressionStep;
                         this.TimelinePlayer.MusicInstance.setParameterByName(this.ProgressionParameter, this.currentProgressionStep);
+
+                        if (this.OnProgressionChangedEvents != null && this.OnProgressionChangedEvents.Length > this.currentProgressionStep)
+                        {
+                            this.OnProgressionChangedEvents[this.currentProgressionStep].Invoke();
+                        }
                     }
                 }
             }
