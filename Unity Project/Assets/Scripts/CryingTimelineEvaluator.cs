@@ -3,26 +3,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CryingTimelineEvaluator : MonoBehaviour
 {
+    public UnityEvent<string> OnScored;
+
     public float[] AnalogScores;
     public float[] ButtonScores;
     public float MaxAnalogError;
+    public float MaxButtonError;
     public CryingTimeline Timeline;
     public CryingTimelinePlayer TimelinePlayer;
     public ScoreData Score;
 
     public CryingAnalogRenderer[] AnalogRenderers;
 
+    private int[] buttonCursors;
+    private float[] buttonMaxScores;
+    private float maxScore;
+
     private void Start()
     {
         // Setup evaluation data
+        this.buttonCursors = new int[this.ButtonScores.Length];
         this.Score.AnalogScores = new float[this.Timeline.Analogs.Length];
         this.Score.TotalScore = 0;
+        this.maxScore = 0;
         for (int iAnalog=0; iAnalog < this.Score.AnalogScores.Length; ++iAnalog)
         {
             this.Score.AnalogScores[iAnalog] = 0;
+            this.maxScore += this.AnalogScores[iAnalog];
             CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
             if (renderer != null)
             {
@@ -30,17 +41,17 @@ public class CryingTimelineEvaluator : MonoBehaviour
             }
         }
 
-        this.Score.ButtonScores = new float[this.Timeline.Buttons.Length][];
+        int buttonCount = this.Timeline.Buttons.Length;
+        this.Score.ButtonScores = new float[buttonCount];
+        this.buttonMaxScores = new float[buttonCount];
         for (int iButton = 0; iButton < this.Score.ButtonScores.Length; ++iButton)
         {
-            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
-            float[] scoreTable = new float[cryingTrack_Button.Beats.Length];
-            for (int iBeat = 0; iBeat < scoreTable.Length; ++iBeat)
-            {
-                scoreTable[iBeat] = 0;
-            }
+            this.Score.ButtonScores[iButton] = 0;
 
-            this.Score.ButtonScores[iButton] = scoreTable;
+            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
+            float buttonScore = cryingTrack_Button.Beats.Length * this.ButtonScores[iButton];
+            this.buttonMaxScores[iButton] = buttonScore;
+            this.maxScore += buttonScore;
         }
     }
 
@@ -51,6 +62,7 @@ public class CryingTimelineEvaluator : MonoBehaviour
         float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
         if (musicBeatTime >= 0)
         {
+            bool updateScore = false;
             float delta = UnityEngine.Time.deltaTime;
             float lengthInBeats = tl.LengthInBeats;
 
@@ -67,8 +79,6 @@ public class CryingTimelineEvaluator : MonoBehaviour
 
                 bool isScoring = diff < this.MaxAnalogError;
 
-                Debug.Log($"abs {abscissa} tl {tlValue} axis {axisValue} diff {diff} isScoring {isScoring}");
-
                 // Update renderer feedback flag
                 CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
                 if (renderer != null)
@@ -81,14 +91,60 @@ public class CryingTimelineEvaluator : MonoBehaviour
                     float scoreToAdd = delta * scorePerSecond;
                     this.Score.AnalogScores[iAnalog] += scoreToAdd;
                     this.Score.TotalScore += scoreToAdd;
+                    updateScore = true;
                 }
             }
 
             for (int iButton = 0; iButton < tl.Buttons.Length; ++iButton)
             {
                 CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
+                CryingButton button = this.TimelinePlayer.Buttons[iButton];
 
-                // TODO : check if a button has been pushed correctly. If so, add points
+                int cursorPosition = this.buttonCursors[iButton];
+                if (cursorPosition < cryingTrack_Button.Beats.Length)
+                {
+                    if (Input.GetKeyDown(button.Input))
+                    {
+                        int beat = cryingTrack_Button.Beats[this.buttonCursors[iButton]];
+                        if (Mathf.Abs(musicBeatTime - beat) < this.MaxButtonError)
+                        {
+                            // validated, add button score
+                            ++this.buttonCursors[iButton];
+
+                            float scoreToAdd = this.ButtonScores[iButton];
+                            this.Score.ButtonScores[iButton] += scoreToAdd;
+                            this.Score.TotalScore += scoreToAdd;
+                            button.Scored.Invoke();
+                            updateScore = true;
+                        }
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            int beat = cryingTrack_Button.Beats[this.buttonCursors[iButton]];
+
+                            if (musicBeatTime > beat + this.MaxButtonError)
+                            {
+                                ++this.buttonCursors[iButton];
+                                button.Missed.Invoke();
+                                if (this.buttonCursors[iButton] >= cryingTrack_Button.Beats.Length)
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (updateScore)
+            {
+                this.OnScored.Invoke(Mathf.Floor(this.Score.TotalScore).ToString());
             }
         }
     }
@@ -97,6 +153,6 @@ public class CryingTimelineEvaluator : MonoBehaviour
     {
         public float TotalScore;
         public float[] AnalogScores;
-        public float[][] ButtonScores;
+        public float[] ButtonScores;
     }
 }
