@@ -1,25 +1,32 @@
 using FMODUnity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CryingTimelineEvaluator : MonoBehaviour
 {
+    public float[] AnalogScores;
+    public float[] ButtonScores;
+    public float MaxAnalogError;
     public CryingTimeline Timeline;
     public CryingTimelinePlayer TimelinePlayer;
     public ScoreData Score;
 
+    public CryingAnalogRenderer[] AnalogRenderers;
+
     private void Start()
     {
         // Setup evaluation data
-        this.Score.analogScores = new float[this.Timeline.Analogs.Length];
-        for (int iAnalog=0; iAnalog < this.Score.analogScores.Length; ++iAnalog)
+        this.Score.AnalogScores = new float[this.Timeline.Analogs.Length];
+        this.Score.TotalScore = 0;
+        for (int iAnalog=0; iAnalog < this.Score.AnalogScores.Length; ++iAnalog)
         {
-            this.Score.analogScores[iAnalog] = 0;
+            this.Score.AnalogScores[iAnalog] = 0;
         }
 
-        this.Score.buttonScores = new float[this.Timeline.Buttons.Length][];
-        for (int iButton = 0; iButton < this.Score.buttonScores.Length; ++iButton)
+        this.Score.ButtonScores = new float[this.Timeline.Buttons.Length][];
+        for (int iButton = 0; iButton < this.Score.ButtonScores.Length; ++iButton)
         {
             CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
             float[] scoreTable = new float[cryingTrack_Button.Beats.Length];
@@ -28,40 +35,60 @@ public class CryingTimelineEvaluator : MonoBehaviour
                 scoreTable[iBeat] = 0;
             }
 
-            this.Score.buttonScores[iButton] = scoreTable;
+            this.Score.ButtonScores[iButton] = scoreTable;
         }
     }
 
     public void Update()
     {
-        // TODO
-        // - check input against each track
         CryingTimeline tl = this.Timeline;
 
-        float currentMusicTime = this.TimelinePlayer.MusicTime;
+        float musicBeatTime = this.TimelinePlayer.MusicTimeInBeats;
         float delta = UnityEngine.Time.deltaTime;
-        
+        float lengthInBeats = tl.LengthInBeats;
+
         for (int iAnalog = 0; iAnalog < tl.Analogs.Length; ++iAnalog)
         {
-        }
+            CryingAnalog analog = this.TimelinePlayer.Analogs[iAnalog];
+            float abscissa = musicBeatTime / tl.LengthInBeats;
+            float tlValue = tl.Analogs[iAnalog].Evaluate(abscissa);
+            float axisValue = analog.AxisValue;
+            float scorePerBeat = this.AnalogScores[iAnalog] / lengthInBeats;
+            float beatLengthInSeconds = this.TimelinePlayer.BeatLengthInSeconds;
+            float scorePerSecond = scorePerBeat / beatLengthInSeconds;
+            float diff = Mathf.Abs(tlValue - axisValue);
 
-        this.Score.buttonScores = new float[this.Timeline.Buttons.Length][];
-        for (int iButton = 0; iButton < this.Score.buttonScores.Length; ++iButton)
-        {
-            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
-            float[] scoreTable = new float[cryingTrack_Button.Beats.Length];
-            for (int iBeat = 0; iBeat < scoreTable.Length; ++iBeat)
+            bool isScoring = diff < this.MaxAnalogError;
+
+            Debug.Log($"abs {abscissa} tl {tlValue} axis {axisValue} diff {diff} isScoring {isScoring}");
+
+            // Update renderer feedback flag
+            CryingAnalogRenderer renderer = this.AnalogRenderers[iAnalog];
+            if (renderer != null)
             {
-                scoreTable[iBeat] = 0;
+                renderer.IsScoring = isScoring;
             }
 
-            this.Score.buttonScores[iButton] = scoreTable;
+            if (isScoring)
+            {
+                float scoreToAdd = delta * scorePerSecond;
+                this.Score.AnalogScores[iAnalog] += scoreToAdd;
+                this.Score.TotalScore += scoreToAdd;
+            }
+        }
+
+        for (int iButton = 0; iButton < tl.Buttons.Length; ++iButton)
+        {
+            CryingTimeline.CryingTrack_Button cryingTrack_Button = this.Timeline.Buttons[iButton];
+            
+            // TODO : check if a button has been pushed correctly. If so, add points
         }
     }
 
     public struct ScoreData
     {
-        public float[] analogScores;
-        public float[][] buttonScores;
+        public float TotalScore;
+        public float[] AnalogScores;
+        public float[][] ButtonScores;
     }
 }

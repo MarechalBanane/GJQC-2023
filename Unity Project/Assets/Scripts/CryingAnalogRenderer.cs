@@ -19,11 +19,20 @@ public class CryingAnalogRenderer : MonoBehaviour
     public UnityEngine.LineRenderer LineRenderer;
     public CryingTimeline Timeline;
     public CryingTimelinePlayer Player;
+    public Color WinColor;
+    public Color LoseColor;
 
     private UnityEngine.AnimationCurve analogCurve;
     private Unity.Collections.NativeArray<Vector3> positions;
     private int pointCount;
     private float pointWidth;
+
+    [UnityEngine.HideInInspector]
+    public bool IsScoring
+    {
+        get;
+        set;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +53,7 @@ public class CryingAnalogRenderer : MonoBehaviour
     void Update()
     {
         float musicTime = this.Player.MusicTime;
-        float musicTimeInBeats = musicTime * this.Player.Tempo / 60 - this.OffsetInBeats;
+        float musicTimeInBeats = this.Player.MusicTimeInBeats - this.OffsetInBeats;
         float timePerPoint = 1.0f / PointsPerBeat;
         Vector3 position = this.transform.position;
 
@@ -60,6 +69,17 @@ public class CryingAnalogRenderer : MonoBehaviour
 
             musicTimeInBeats += timePerPoint;
             this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y + (value * this.Height / 2), position.z);
+        }
+
+        if (this.IsScoring)
+        {
+            this.LineRenderer.startColor = this.WinColor;
+            this.LineRenderer.endColor = this.WinColor;
+        }
+        else
+        {
+            this.LineRenderer.startColor = this.LoseColor;
+            this.LineRenderer.endColor = this.LoseColor;
         }
 
         this.LineRenderer.SetPositions(this.positions);

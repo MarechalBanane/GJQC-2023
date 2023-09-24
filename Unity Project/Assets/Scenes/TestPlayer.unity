@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 1285312903}
     - target: {fileID: -4501745148791146323, guid: a008f57d7ead445419d5bd402f5c7152, type: 3}
       propertyPath: AxisName
-      value: CryingIntensite
+      value: Vertical
       objectReference: {fileID: 0}
     - target: {fileID: -4501745148791146323, guid: a008f57d7ead445419d5bd402f5c7152, type: 3}
       propertyPath: MinMax.y
@@ -479,6 +479,10 @@ PrefabInstance:
     - target: {fileID: -4501745148791146323, guid: a008f57d7ead445419d5bd402f5c7152, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4501745148791146323, guid: a008f57d7ead445419d5bd402f5c7152, type: 3}
+      propertyPath: AxisMinMax.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -4501745148791146323, guid: a008f57d7ead445419d5bd402f5c7152, type: 3}
       propertyPath: AxisMinMax.y
@@ -1260,6 +1264,7 @@ GameObject:
   - component: {fileID: 1285312902}
   - component: {fileID: 1285312901}
   - component: {fileID: 1285312903}
+  - component: {fileID: 1285312904}
   m_Layer: 0
   m_Name: Timeline
   m_TagString: Untagged
@@ -1327,108 +1332,72 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: -0.117614895
-      outSlope: -0.117614895
+      value: -0.45401
+      inSlope: 1.3673079
+      outSlope: 1.3673079
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.2827445
-      value: -0.15086986
-      inSlope: -0.41355997
-      outSlope: -0.41355997
+      time: 0.1312734
+      value: -0.27451885
+      inSlope: 2.2865362
+      outSlope: 2.2865362
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2.0706265
-      value: -0.70987606
-      inSlope: 0.0282875
-      outSlope: 0.0282875
-      tangentMode: 34
+      time: 0.2921166
+      value: 0.24110663
+      inSlope: -4.8054333
+      outSlope: -4.8054333
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.05006674
     - serializedVersion: 3
-      time: 3.7627242
-      value: 0.5864061
-      inSlope: 0.264195
-      outSlope: 0.264195
-      tangentMode: 34
+      time: 0.4233024
+      value: -0.3476716
+      inSlope: 5.6366715
+      outSlope: 5.6366715
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.052000396
     - serializedVersion: 3
-      time: 5.2355976
-      value: 0.23631877
-      inSlope: -0.04923535
-      outSlope: -0.04923535
-      tangentMode: 34
+      time: 0.5358567
+      value: 0.46654743
+      inSlope: -7.007497
+      outSlope: -7.007497
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.06482721
     - serializedVersion: 3
-      time: 6.742335
-      value: 0.44608572
-      inSlope: -0.40603337
-      outSlope: -0.40603337
-      tangentMode: 34
+      time: 0.7342188
+      value: -0.4288259
+      inSlope: -0.5549261
+      outSlope: -0.5549261
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.11494173
     - serializedVersion: 3
-      time: 7.4040213
-      value: -0.18336734
-      inSlope: -0.32989377
-      outSlope: -0.32989377
-      tangentMode: 34
+      time: 0.90946525
+      value: 0.113215804
+      inSlope: -10.133404
+      outSlope: -10.133404
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.072516136
     - serializedVersion: 3
-      time: 8.789799
-      value: 0.22058475
-      inSlope: -0.07471275
-      outSlope: -0.07471275
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 9.975598
-      value: -0.30226278
-      inSlope: -0.019951254
-      outSlope: -0.019951254
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 11.450478
-      value: 0.28919554
-      inSlope: 0.15273911
-      outSlope: 0.15273911
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 15.086504
-      value: -0.058202386
-      inSlope: 0.059911598
-      outSlope: 0.059911598
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 20
-      value: 1
-      inSlope: 0.21536648
-      outSlope: 0.21536648
+      time: 1
+      value: 0.5741844
+      inSlope: 5.091621
+      outSlope: 5.091621
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -1457,6 +1426,27 @@ MonoBehaviour:
       Data3: -677842807
       Data4: 651184010
     Path: event:/CRY/CRY_Main
+--- !u!114 &1285312904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285312899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ccdfbbaf4740142ac2de02664efbaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnalogScores:
+  - 10000
+  ButtonScores:
+  - 500
+  MaxAnalogError: 0.2
+  Timeline: {fileID: 1285312902}
+  TimelinePlayer: {fileID: 1285312901}
+  AnalogRenderers:
+  - {fileID: 2029627128}
 --- !u!1 &1314405699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,6 +1682,8 @@ MonoBehaviour:
   LineRenderer: {fileID: 2029627129}
   Timeline: {fileID: 1285312902}
   Player: {fileID: 1285312901}
+  WinColor: {r: 0, g: 1, b: 0.07060099, a: 1}
+  LoseColor: {r: 0.8679245, g: 0.18341042, b: 0.18341042, a: 1}
 --- !u!120 &2029627129
 LineRenderer:
   serializedVersion: 2
@@ -1713,7 +1705,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

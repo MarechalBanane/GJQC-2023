@@ -55,6 +55,24 @@ public class CryingTimelinePlayer : MonoBehaviour
     [UnityEngine.HideInInspector]
     public float MusicTime;
     [UnityEngine.HideInInspector]
+    public float MusicTimeInBeats
+    {
+        get
+        {
+            return this.MusicTime * this.Tempo / 60;
+        }
+    }
+
+    [UnityEngine.HideInInspector]
+    public float BeatLengthInSeconds
+    {
+        get
+        {
+            return 60 / this.Tempo;
+        }
+    }
+
+    [UnityEngine.HideInInspector]
     public int MusicBeat;
 
     public int BeatOffsetForFeedback = 4;
@@ -66,7 +84,7 @@ public class CryingTimelinePlayer : MonoBehaviour
     private GCHandle timelineHandle;
 
     public float Tempo => this.timelineInfo.Tempo;
-
+    
     private void Start()
     {
         timelineInfo = new TimelineInfo();
