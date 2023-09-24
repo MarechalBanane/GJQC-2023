@@ -5,8 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void LoadScene(string scene)
+    bool alreadyLoading = false;
+
+    public void Update()
     {
-        SceneManager.LoadScene(scene);
+        Input.GetKeyDown(KeyCode.JoystickButton2);
+
+        if (Input.GetKeyDown(KeyCode.JoystickButton2) && !alreadyLoading)
+        {
+            alreadyLoading = true;
+            SceneManager.LoadScene("Main");
+        }
     }
+
 }
