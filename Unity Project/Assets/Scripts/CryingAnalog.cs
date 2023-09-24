@@ -30,7 +30,12 @@ public class CryingAnalog : MonoBehaviour
         if (this.Cry != null)
         {
             float value = this.AxisValue;
-            value = (value - this.AxisMinMax.x) / (this.AxisMinMax.y - this.AxisMinMax.x);
+            float range = this.AxisMinMax.y - this.AxisMinMax.x;
+            if (range > 0)
+            {
+                value = (value - this.AxisMinMax.x) / (this.AxisMinMax.y - this.AxisMinMax.x);
+            }
+
             value = Mathf.Lerp(this.ParamMinMax.x, this.ParamMinMax.y, value);
             this.Cry.Instance.setParameterByName(this.ParameterName, value);
         }
