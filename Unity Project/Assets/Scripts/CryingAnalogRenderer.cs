@@ -65,9 +65,9 @@ public class CryingAnalogRenderer : MonoBehaviour
 
         for (int i = 0; i < this.pointCount; ++i)
         {
-            float value = this.analogCurve.Evaluate(musicTimeInBeats / this.Timeline.LengthInBeats);
-
+            float abscissa = musicTimeInBeats / this.Timeline.LengthInBeats;
             musicTimeInBeats += timePerPoint;
+            float value = this.analogCurve.Evaluate(abscissa);
             this.positions[i] = new Vector3(position.x + i * this.pointWidth, position.y + (value * this.Height / 2), position.z);
         }
 

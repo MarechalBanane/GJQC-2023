@@ -38,7 +38,6 @@ public class CryingTimelinePlayer : MonoBehaviour
         public int Beat = 0;
         public int Position = 0;
         public float Tempo = 0;
-        public float MusicTime = 0;
         public int BeatsPerBar = 0;
         public bool NewBeat = false;
 
@@ -75,6 +74,7 @@ public class CryingTimelinePlayer : MonoBehaviour
     [UnityEngine.HideInInspector]
     public int MusicBeat;
 
+    public int BeatsBeforeStarting = 16;
     public int BeatOffsetForFeedback = 4;
 
     private FMOD.Studio.EVENT_CALLBACK beatCallback;
@@ -103,7 +103,7 @@ public class CryingTimelinePlayer : MonoBehaviour
         musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT | FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_MARKER);
         musicInstance.start();
         this.MusicTime = 0;
-        this.MusicBeat = -1;
+        this.MusicBeat = -this.BeatsBeforeStarting-1;
     }
 
     private void Update()
@@ -111,8 +111,8 @@ public class CryingTimelinePlayer : MonoBehaviour
         this.MusicTime += Time.unscaledDeltaTime;
         if (this.timelineInfo.NewBeat)
         {
-            this.MusicTime = this.timelineInfo.MusicTime;
             ++this.MusicBeat;
+            this.MusicTime = this.MusicBeat / this.Tempo * 60;
             this.timelineInfo.NewBeat = false;
             CryingTimeline tl = this.Timeline;
             for (int iButton = 0; iButton < tl.Buttons.Length; iButton++)
@@ -146,7 +146,7 @@ public class CryingTimelinePlayer : MonoBehaviour
 
     private void OnGUI()
     {
-        GUILayout.Box(String.Format($"bar {timelineInfo.Bar} beat {timelineInfo.Beat} position {timelineInfo.Position} tempo {timelineInfo.Tempo} time {timelineInfo.MusicTime}"));
+        //GUILayout.Box(String.Format($"bar {timelineInfo.Bar} beat {timelineInfo.Beat} position {timelineInfo.Position} tempo {timelineInfo.Tempo} time {timelineInfo.MusicTime}"));
     }
 
     [AOT.MonoPInvokeCallback(typeof(FMOD.Studio.EVENT_CALLBACK))]
@@ -177,7 +177,6 @@ public class CryingTimelinePlayer : MonoBehaviour
                         timelineInfo.Tempo = parameter.tempo;
                         timelineInfo.Position = parameter.position;
                         timelineInfo.BeatsPerBar = parameter.timesignatureupper;
-                        timelineInfo.MusicTime = ((parameter.bar-1) * 4 + (parameter.beat-1)) / parameter.tempo * 60;
                         timelineInfo.NewBeat = true;
                     }
                     break;
