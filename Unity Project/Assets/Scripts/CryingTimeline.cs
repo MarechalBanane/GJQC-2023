@@ -10,12 +10,18 @@ public class CryingTimeline : MonoBehaviour
     public int LengthInBeats = 1;
     public UnityEngine.AnimationCurve[] Analogs;
     public CryingTrack_Button[] Buttons;
-    public int[] BeatEvents;
-    public UnityEvent OnBeatEvent;
+    public BeatEvent[] BeatEvents;
 
     [System.Serializable]
     public struct CryingTrack_Button
     {
         public int[] Beats;
+    }
+
+    [System.Serializable]
+    public struct BeatEvent
+    {
+        public int Beat;
+        public UnityEvent OnBeatEvent;
     }
 }
