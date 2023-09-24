@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8491682731392115155}
   - component: {fileID: 5704786715023866542}
   - component: {fileID: 8311557785894276017}
+  - component: {fileID: 1159521739649565417}
   m_Layer: 0
   m_Name: P_CryingButton
   m_TagString: Untagged
@@ -71,7 +72,7 @@ MonoBehaviour:
   TapPreview:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2111255162336481160}
+      - m_Target: {fileID: 1159521739649565417}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
         m_Mode: 5
@@ -86,7 +87,7 @@ MonoBehaviour:
   Tapped:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5766134181483756605}
+      - m_Target: {fileID: 1159521739649565417}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
         m_Mode: 5
@@ -104,6 +105,27 @@ MonoBehaviour:
   Missed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &1159521739649565417
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92440775354636134}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: adb02671d64884e4c85228fbe631113a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &344053650705913238
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +174,6 @@ GameObject:
   - component: {fileID: 4883656181262628823}
   - component: {fileID: 8987540709729090272}
   - component: {fileID: 4444196515747598146}
-  - component: {fileID: 5766134181483756605}
   m_Layer: 0
   m_Name: Button_Pressed
   m_TagString: Untagged
@@ -217,27 +238,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &5766134181483756605
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 372961834698180504}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 369b0be419ebb9443a53d28202b85604, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1261149085755323074
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +360,6 @@ GameObject:
   - component: {fileID: 4068736132709023346}
   - component: {fileID: 630438392064588470}
   - component: {fileID: 1972467338170329312}
-  - component: {fileID: 2111255162336481160}
   m_Layer: 0
   m_Name: Button_Light
   m_TagString: Untagged
@@ -425,27 +424,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &2111255162336481160
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743372682025876693}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6c5ede28aabf19b46bfd162720c71b7b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6519229337160849957
 GameObject:
   m_ObjectHideFlags: 0
